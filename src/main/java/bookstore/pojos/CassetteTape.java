@@ -1,10 +1,14 @@
 package bookstore.pojos;
 
-import java.time.LocalDate;
-import java.util.Date;
+import bookstore.entities.CassetteTapeEntity;
+import bookstore.entities.VinylRecordEntity;
+
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * DTO for {@link CassetteTapeEntity}
+ */
 public class CassetteTape extends PhysicalMusicFormat {
     private boolean hasAutoReverse = false;
 
@@ -67,4 +71,44 @@ public class CassetteTape extends PhysicalMusicFormat {
         System.out.println("Selling Cassette:  " + getTitle() + " by " + getArtist() + " for " + getPrice());
         IO.println("Remaining stock:" + getCopies());
     }
+
+    // Mapping: DTO to Database Entity
+    public CassetteTapeEntity toEntity() {
+        CassetteTapeEntity entity = new CassetteTapeEntity();
+
+        //Product
+        entity.setId(this.getDbId());
+        entity.setProductId(this.getProductId());
+
+        //PhysicalMediaFormat
+        entity.setPlaybackDurationMinutes(this.getPlaybackDurationMinutes());
+        entity.setTitle(this.getTitle());
+        entity.setArtist(this.getArtist());
+        entity.setDateOfRelease(this.getDateOfRelease());
+        entity.setPrice(this.getPrice());
+        entity.setCopies(this.getCopies());
+
+        //Cassette
+        entity.setHasAutoReverse(this.getHasAutoReverse());
+
+        return entity;
+    }
+
+    // Mapping: Database Entity to DTO
+    public static CassetteTape fromEntity(CassetteTapeEntity entity) {
+        CassetteTape cassette = new CassetteTape(
+                entity.getTitle(),
+                entity.getDateOfRelease(),
+                entity.getArtist(),
+                entity.getPlaybackDurationMinutes(),
+                entity.getPrice(),
+                entity.getCopies(),
+                entity.getHasAutoReverse()
+        );
+
+        cassette.setDbId(entity.getId());
+        cassette.setProductId(entity.getProductId());
+        return cassette;
+    }
+
 }

@@ -3,6 +3,9 @@ package bookstore.pojos;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * DTO for {@link bookstore.entities.PublicationEntity}
+ */
 public abstract class Publication extends Product {
     private String title = "";
     private double price = 0.0;

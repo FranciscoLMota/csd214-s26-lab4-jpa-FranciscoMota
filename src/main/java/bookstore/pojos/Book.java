@@ -2,6 +2,7 @@ package bookstore.pojos;
 
 import java.util.Objects;
 import java.util.Scanner;
+import bookstore.entities.BookEntity;
 
 public class Book extends Publication {
     private String author = "";
@@ -87,5 +88,32 @@ public class Book extends Publication {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), author);
+    }
+
+    // Mapping: DTO to Database Entity
+    public BookEntity toEntity() {
+        BookEntity entity = new BookEntity();
+        entity.setId(this.getDbId());
+        entity.setProductId(this.getProductId());
+        entity.setTitle(this.getTitle());
+        entity.setPrice(this.getPrice());
+        entity.setCopies(this.getCopies());
+        entity.setAuthor(this.getAuthor());
+        entity.setIsbn(this.getIsbn());
+        return entity;
+    }
+
+    // Mapping: Database Entity to DTO
+    public static Book fromEntity(BookEntity entity) {
+        Book book = new Book(
+                entity.getAuthor(),
+                entity.getTitle(),
+                entity.getPrice(),
+                entity.getCopies(),
+                entity.getIsbn()
+        );
+        book.setDbId(entity.getId());
+        book.setProductId(entity.getProductId());
+        return book;
     }
 }

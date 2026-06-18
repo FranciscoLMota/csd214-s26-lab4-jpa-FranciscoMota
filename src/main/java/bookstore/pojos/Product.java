@@ -3,14 +3,24 @@ package bookstore.pojos;
 import java.io.Serializable;
 import java.util.UUID;
 
-// Marked abstract because it implements SaleableItem but doesn't implement getPrice()
-// (Price is defined in children: Ticket and Publication)
+/**
+ * DTO for {@link bookstore.entities.ProductEntity}
+ * Separation of Concerns: Handles Console Presentation & I/O
+ */
 public abstract class Product extends Editable implements SaleableItem, Serializable {
-    private String productId;
+    private Long dbId; // Primary key link for database synchronization
+    private String productId; // UUID
 
     public Product() {
-        // generate a default productID
         setProductId(UUID.randomUUID().toString());
+    }
+
+    public Long getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(Long dbId) {
+        this.dbId = dbId;
     }
 
     public String getProductId() {
@@ -24,7 +34,8 @@ public abstract class Product extends Editable implements SaleableItem, Serializ
     @Override
     public String toString() {
         return "Product{" +
-                "productId='" + productId + '\'' +
+                "dbId=" + dbId +
+                ", productId='" + productId + '\'' +
                 "} ";
     }
 }

@@ -1,10 +1,16 @@
 package bookstore.pojos;
 
+import bookstore.entities.PhysicalMusicFormatEntity;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
 
+
+/**
+ * DTO for {@link bookstore.entities.PhysicalMusicFormatEntity}
+ */
 public abstract class PhysicalMusicFormat extends Product {
     private double playbackDurationMinutes;
     private String title;
@@ -151,4 +157,5 @@ public abstract class PhysicalMusicFormat extends Product {
     public void sellItem() {
         this.setCopies(this.getCopies() - 1);
     }
+    
 }
